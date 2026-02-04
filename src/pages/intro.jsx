@@ -5,6 +5,7 @@ import myportpic from "@/assets/myportpic.jpeg";
 import PillNav from "@/components/PillNav";
 import Toast from "@/components/Toast";
 import TextType from "@/components/TextType";
+import LetterGlitch from "@/components/LetterGlitch";
 
 function Intro() {
   const [showToast, setShowToast] = React.useState(false);
@@ -21,37 +22,14 @@ function Intro() {
   };
   return (
     <div className="relative h-screen w-screen overflow-hidden">
-      <div className="absolute inset-0 bg-black">
-        <DotGrid
-          dotSize={5}
-          gap={15}
-          baseColor="#271E37"
-          activeColor="#5227FF"
-          proximity={120}
-          shockRadius={250}
-          shockStrength={5}
-          resistance={750}
-          returnDuration={1.5}
+      <div className="absolute inset-0 z-20 pointer-events-none">
+        <LetterGlitch 
+          glitchColors={['#2b4539', '#61dca3', '#61b3dc']} 
+          glitchSpeed={50}
+          outerVignette={true}
         />
       </div>
-      <div className="absolute inset-0 z-[9999] pointer-events-none">
-        <PillNav
-          items={[
-            { label: "Projects", href: '/projects', onClick: handleProjectsClick },
-            { label: "TechStack", href: "#" },
-            { label: "Experiences", href: "#" },
-          ]}
-          activeHref="/"
-          className="pointer-events-auto"
-          ease="power2.easeOut"
-          baseColor="#000000"
-          pillColor="#ffffff"
-          hoveredPillTextColor="#ffffff"
-          pillTextColor="#000000"
-          initialLoadAnimation={false}
-        />
-      </div>
-      <div className="absolute inset-0 flex justify-center items-center px-4">
+      <div className="absolute inset-0 flex justify-center items-center px-4 z-100">
         <div className="w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden">
           {/* Header */}
           <div className="bg-gray-950 px-4 py-3 flex items-center justify-between border-b border-gray-800">

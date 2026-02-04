@@ -1,47 +1,41 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import Lenis from 'lenis'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import PillNav from '@/components/PillNav'
 import Intro from '@/pages/intro'
 import Projects from '@/pages/projects'
 
-function App() {
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smoothWheel: true,
-      smoothTouch: true,
-      touchMultiplier: 2,
-      infinite: false,
-    })
+export default function App() {
+  const lenisRef = useRef(null)
 
-    function raf(time) {
+  useEffect(() => {
+    const lenis = new Lenis({ smoothWheel: true })
+    lenisRef.current = lenis
+
+    const raf = time => {
       lenis.raf(time)
       requestAnimationFrame(raf)
     }
-
     requestAnimationFrame(raf)
-
-    return () => {
-      lenis.destroy()
-    }
   }, [])
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={
-          <div className="w-screen overflow-x-hidden">
-            <Intro />
-            <Projects />
-          </div>
-        } />
-        <Route path="/projects" element={<Projects />} />
-      </Routes>
-    </Router>
+    <>
+      <PillNav
+        lenis={lenisRef}
+        items={[
+          { label: 'Projects', href: '#projects' },
+          { label: 'Experience', href: '#experience' },
+          { label: 'TechStack', href: '#techstack' },
+        ]}
+      />
+
+      <section id="intro" className="min-h-screen">
+        <Intro />
+      </section>
+
+      <section id="projects" className="min-h-screen">
+        <Projects />
+      </section>
+    </>
   )
 }
-
-export default App
