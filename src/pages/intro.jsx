@@ -1,27 +1,48 @@
-import DotGrid from "@/components/DotGrid";
 import React from "react";
 import { Mail } from "lucide-react";
 import myportpic from "@/assets/myportpic.jpeg";
-import PillNav from "@/components/PillNav";
 import Toast from "@/components/Toast";
 import TextType from "@/components/TextType";
 import LetterGlitch from "@/components/LetterGlitch";
 
 function Intro() {
   const [showToast, setShowToast] = React.useState(false);
+  const [textTypeKey, setTextTypeKey] = React.useState(0);
+  const sectionRef = React.useRef(null);
+  const inViewRef = React.useRef(false);
   const handleContactClick = () => {
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);
   };
 
-  const handleProjectsClick = () => {
-    const projectsSection = document.getElementById('projects-section');
-    if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  // const handleProjectsClick = () => {
+  //   const projectsSection = document.getElementById('projects-section');
+  //   if (projectsSection) {
+  //     projectsSection.scrollIntoView({ behavior: 'smooth' });
+  //   }
+  // };
+  React.useEffect(() => {
+    const sectionEl = sectionRef.current;
+    if (!sectionEl) return;
+
+    const observer = new IntersectionObserver(
+      entries => {
+        const entry = entries[0];
+        const isInView = entry.isIntersecting && entry.intersectionRatio >= 0.6;
+        if (isInView && !inViewRef.current) {
+          setTextTypeKey(prev => prev + 1);
+        }
+        inViewRef.current = isInView;
+      },
+      { threshold: [0, 0.6, 1] }
+    );
+
+    observer.observe(sectionEl);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="relative h-screen w-screen overflow-hidden">
+    <div ref={sectionRef} className="relative h-screen w-screen overflow-hidden">
       <div className="absolute inset-0 z-20 pointer-events-none">
         <LetterGlitch 
           glitchColors={['#2b4539', '#61dca3', '#61b3dc']} 
@@ -44,13 +65,14 @@ function Intro() {
           {/* Content */}
           <div className="p-8 bg-gray-950 grid grid-cols-2 gap-8 items-start text-white font-bold font-mono ">
             <div><TextType
+                key={textTypeKey}
                 text={[
                   `I’m Shaswat Mishra, a motivated developer currently focused on mastering full-stack web development. I enjoy working with React, JavaScript, and Spring Boot, and I actively practice Data Structures & Algorithms to strengthen my problem-solving skills.
 
                   I believe in learning by building and enjoy creating projects that reflect real-world use cases.`
                 ]}
-                typingSpeed={75}
-                pauseDuration={1500}
+                typingSpeed={30}
+                pauseDuration={9000}
                 showCursor
                 cursorCharacter="_"
                 texts={[

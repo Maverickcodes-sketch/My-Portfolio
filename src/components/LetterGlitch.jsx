@@ -101,7 +101,7 @@ const LetterGlitch = ({
     const ctx = context.current;
     const { width, height } = canvasRef.current.getBoundingClientRect();
     ctx.clearRect(0, 0, width, height);
-    ctx.font = `${fontSize}px monospace`;
+    ctx.font = `${fontSize}px serif`;
     ctx.textBaseline = 'top';
 
     letters.current.forEach((letter, index) => {
