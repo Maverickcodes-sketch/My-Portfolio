@@ -1,7 +1,7 @@
 # Overview
 A personal portfolio website built with **React** and **ReactBits UI**, showcasing my projects, skills, and experiences in a clean and interactive way.
 
-[🚀 Live Demo](my-portfolio-three-blond-44.vercel.app)
+[🚀 Live Demo](https://my-portfolio-three-blond-44.vercel.app/)
 
 ## Tech stack
 - React
