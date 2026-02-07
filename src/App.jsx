@@ -23,9 +23,70 @@ export default function App() {
     }
     requestAnimationFrame(raf)
 
+    const sections = Array.from(document.querySelectorAll('[data-page]'))
+    let isSnapping = false
+
+    const getClosestSectionIndex = () => {
+      if (sections.length === 0) return 0
+      const scrollY = window.scrollY
+      let closestIndex = 0
+      let closestDistance = Number.POSITIVE_INFINITY
+
+      sections.forEach((section, index) => {
+        const top = section.offsetTop
+        const distance = Math.abs(top - scrollY)
+        if (distance < closestDistance) {
+          closestDistance = distance
+          closestIndex = index
+        }
+      })
+
+      return closestIndex
+    }
+
+    const handleWheel = event => {
+      if (sections.length === 0) return
+      const lockTarget = event.target?.closest?.('[data-scroll-lock="true"]')
+      if (lockTarget) {
+        event.preventDefault()
+        return
+      }
+      if (isSnapping) {
+        event.preventDefault()
+        return
+      }
+
+      const direction = Math.sign(event.deltaY)
+      if (direction === 0) return
+
+      const currentIndex = getClosestSectionIndex()
+      const nextIndex = Math.min(
+        sections.length - 1,
+        Math.max(0, currentIndex + direction)
+      )
+
+      if (nextIndex === currentIndex) return
+
+      event.preventDefault()
+      isSnapping = true
+
+      lenis.scrollTo(sections[nextIndex], {
+        duration: 1.1,
+        easing: t => 1 - Math.pow(1 - t, 3)
+      })
+
+      window.setTimeout(() => {
+        isSnapping = false
+      }, 1200)
+    }
+
+    window.addEventListener('wheel', handleWheel, { passive: false })
+
     return () => {
       document.documentElement.style.overflowX = prevHtmlOverflowX
       document.body.style.overflowX = prevBodyOverflowX
+      window.removeEventListener('wheel', handleWheel)
+      lenis.destroy()
     }
   }, [])
 
@@ -40,19 +101,19 @@ export default function App() {
         ]}
       />
 
-      <section id="intro" className="min-h-screen">
+      <section id="intro" data-page className="min-h-screen">
         <Intro />
       </section>
 
-      <section id="projects" className="min-h-screen">
+      <section id="projects" data-page className="min-h-screen">
         <Projects />
       </section>
 
-      <section  id="experience"  className="min-h-screen">
+      <section id="experience" data-page className="min-h-screen">
         <Experience/>
       </section>
 
-      <section id="techstack" className="min-h-screen">
+      <section id="techstack" data-page className="min-h-screen">
         <TechStake/>
       </section>
     </>

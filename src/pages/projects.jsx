@@ -77,9 +77,14 @@ function Projects() {
       </div>
       <div className="absolute inset-0 flex items-start justify-start p-10">
         <div
+          data-scroll-lock="true"
           className="w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden mt-24 h-[70vh] flex flex-col"
           onMouseEnter={() => setIsHoveringMockup(true)}
           onMouseLeave={() => setIsHoveringMockup(false)}
+          onWheel={event => {
+            event.preventDefault();
+            event.stopPropagation();
+          }}
         >
           {/* Header */}
           <div className="bg-gray-950 px-4 py-3 flex items-center justify-between border-b border-gray-800">
