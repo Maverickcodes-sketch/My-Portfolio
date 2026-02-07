@@ -5,7 +5,7 @@ import PixelSnow from "@/components/PixelSnow";
 import FuzzyText from "@/components/FuzzyText";
 function Experience() {
   return (
-    <div className="relative h-screen w-screen overflow-hidden">
+    <div className="relative min-h-screen w-full overflow-hidden">
       <div className="absolute inset-0 z-20 pointer-events-none bg-black">
         <PixelSnow
           color="#ffffff"
@@ -23,8 +23,8 @@ function Experience() {
         />
       </div>
       {/*Mockup--window*/}
-      <div className="absolute top-4 right-4 flex justify-end items-start px-4 z-100">
-        <div className="w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden">
+      <div className="relative z-[100] flex flex-col gap-6 px-4 py-6 md:absolute md:top-4 md:right-4 md:items-start md:py-0">
+        <div className="w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden md:w-[min(90vw,48rem)]">
           {/* Header */}
           <div className="bg-gray-950 px-4 py-3 flex items-center justify-between border-b border-gray-800">
             <div className="flex items-center gap-2">
@@ -36,7 +36,7 @@ function Experience() {
             <div className="w-12"></div>
           </div>
           {/* Content */}
-          <div className="p-8 bg-gray-950 grid grid-cols-2 gap-8 items-start text-white font-bold font-mono ">
+          <div className="p-6 md:p-8 bg-gray-950 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start text-white font-bold font-mono">
             <div>
           {" Served on the Organising Committee, managing brand partnerships, inter-college collaborations, and event logistics, ensuring smooth coordination and execution. Alongside organizational responsibilities, actively participated in multiple MUN conferences and earned an Honourable Mention at NSUT MUN, reflecting strong research, diplomacy, and public speaking skills."}
               
@@ -58,8 +58,8 @@ function Experience() {
         </div>
       </div>
       {/*Mockup--window*/}
-      <div className="absolute bottom-4 left-4 flex justify-start items-end px-4 z-100">
-        <div className="w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden">
+      <div className="relative z-[100] flex flex-col gap-6 px-4 pb-10 md:absolute md:bottom-4 md:left-4 md:items-end md:pb-0">
+        <div className="w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden md:w-[min(90vw,48rem)]">
           {/* Header */}
           <div className="bg-gray-950 px-4 py-3 flex items-center justify-between border-b border-gray-800">
             <div className="flex items-center gap-2">
@@ -71,7 +71,7 @@ function Experience() {
             <div className="w-12"></div>
           </div>
           {/* Content */}
-          <div className="p-8 bg-gray-950 grid grid-cols-2 gap-8 items-start text-white font-bold font-mono ">
+          <div className="p-6 md:p-8 bg-gray-950 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start text-white font-bold font-mono">
             <div>
               {"  Served as a corporate realtions member handling sponsorship management and brand collaborations, responsible for outreach, negotiations, and maintaining professional relationships with partner brands. This role strengthened my communication, negotiation, and stakeholder management skills while contributing to successful event execution."}
             </div>

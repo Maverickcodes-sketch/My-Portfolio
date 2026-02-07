@@ -66,7 +66,7 @@ function Projects() {
   return (
     <div
       ref={sectionRef}
-      className="relative h-screen w-screen overflow-hidden"
+      className="relative min-h-screen w-full overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none">
         <LetterGlitch
@@ -75,10 +75,10 @@ function Projects() {
           outerVignette={true}
         />
       </div>
-      <div className="absolute inset-0 flex items-start justify-start p-10">
+      <div className="absolute inset-0 flex items-start justify-start p-4 md:p-10">
         <div
           data-scroll-lock="true"
-          className="w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden mt-24 h-[70vh] flex flex-col"
+          className="w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden mt-16 md:mt-24 h-[70vh] md:h-[70vh] flex flex-col"
           onMouseEnter={() => setIsHoveringMockup(true)}
           onMouseLeave={() => setIsHoveringMockup(false)}
           onWheel={event => {
@@ -106,7 +106,7 @@ function Projects() {
             />
           </div>
           {/* Content */}
-          <div className="relative p-8 bg-gray-950 grid grid-cols-2 gap-8 items-start text-white font-bold font-mono flex-1 overflow-hidden">
+          <div className="relative p-4 md:p-8 bg-gray-950 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start text-white font-bold font-mono flex-1 overflow-hidden">
             <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
               <Github size={200} className="text-gray-500 opacity-20" />
             </div>
@@ -176,7 +176,7 @@ function Projects() {
             </div>
           </div>
         </div>
-        <div className="absolute right-10 top-1/2 transform -translate-y-1/2 z-20 ">
+        <div className="hidden md:flex absolute right-10 top-1/2 transform -translate-y-1/2 z-20">
           <FuzzyText
             fontSize="clamp(3rem, 15vw, 8rem)"
             fontWeight={900}
