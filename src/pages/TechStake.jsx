@@ -10,7 +10,7 @@ function TechStake() {
         <PixelSnow
           color="#ffffff"
           flakeSize={0.01}
-          minFlakeSize={1.25}
+          minFlakeSize={1.00}
           pixelResolution={300}
           speed={1.25}
           density={0.3}

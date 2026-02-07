@@ -28,7 +28,7 @@ export default function App() {
 
     const getClosestSectionIndex = () => {
       if (sections.length === 0) return 0
-      const scrollY = window.scrollY
+      const scrollY = typeof lenis.scroll === 'number' ? lenis.scroll : window.scrollY
       let closestIndex = 0
       let closestDistance = Number.POSITIVE_INFINITY
 
@@ -44,8 +44,14 @@ export default function App() {
       return closestIndex
     }
 
+    const isSnapDisabledForTarget = target => {
+      if (!target?.closest) return false
+      return Boolean(target.closest('[data-snap="false"]'))
+    }
+
     const handleWheel = event => {
       if (sections.length === 0) return
+      if (isSnapDisabledForTarget(event.target)) return
       const lockTarget = event.target?.closest?.('[data-scroll-lock="true"]')
       if (lockTarget) {
         event.preventDefault()
@@ -109,11 +115,11 @@ export default function App() {
         <Projects />
       </section>
 
-      <section id="experience" data-page className="min-h-screen">
+      <section id="experience" data-page data-snap="false" className="min-h-screen">
         <Experience/>
       </section>
 
-      <section id="techstack" data-page className="min-h-screen">
+      <section id="techstack" data-page data-snap="false" className="min-h-screen">
         <TechStake/>
       </section>
     </>
