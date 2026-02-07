@@ -295,7 +295,8 @@ class App {
   ) {
     document.documentElement.classList.remove('no-js');
     this.container = container;
-    this.scrollSpeed = scrollSpeed;
+    this.isMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+    this.scrollSpeed = this.isMobile ? scrollSpeed * 1.6 : scrollSpeed;
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
     this.onCheckDebounce = debounce(this.onCheck, 200);
     this.createRenderer();

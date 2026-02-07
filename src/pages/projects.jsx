@@ -154,7 +154,7 @@ function Projects() {
                     </a>
                   </div>
                 </ScrollStackItem>
-                <ScrollStackItem>
+                <ScrollStackItem itemClassName="md:h-[26rem] md:w-[52rem] md:-mt-10">
                   <div className="h-full flex flex-col justify-center items-start p-6 bg-gradient-to-r from-gray-900 via-gray-800 to-blue-600 text-white rounded-2xl">
                     <SplitText
                       text="More loading soon…"
