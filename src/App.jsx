@@ -1,127 +1,69 @@
 import { useEffect, useRef } from 'react'
 import Lenis from 'lenis'
-import PillNav from '@/components/PillNav'
-import Intro from '@/pages/intro'
-import Projects from '@/pages/projects'
-import Experience from '@/pages/Experience'
-import TechStake from '@/pages/TechStake'
+import PixelSnow from '@/components/PixelSnow'
+import IntroCard from '@/components/IntroCard'
+import ProjectsCard from '@/components/ProjectsCard'
+import ExperienceCard from '@/components/ExperienceCard'
+import TechStackCard from '@/components/TechStackCard'
+import Footer from '@/components/Footer'
 
 export default function App() {
   const lenisRef = useRef(null)
 
   useEffect(() => {
-    const lenis = new Lenis({ smoothWheel: true })
+    // Lenis for smooth global scrolling (even if the page fits on 1 screen on large monitors, it helps on smaller ones)
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+    })
     lenisRef.current = lenis
-    const prevHtmlOverflowX = document.documentElement.style.overflowX
-    const prevBodyOverflowX = document.body.style.overflowX
-    document.documentElement.style.overflowX = 'hidden'
-    document.body.style.overflowX = 'hidden'
 
-    const raf = time => {
+    const raf = (time) => {
       lenis.raf(time)
       requestAnimationFrame(raf)
     }
     requestAnimationFrame(raf)
 
-    const sections = Array.from(document.querySelectorAll('[data-page]'))
-    let isSnapping = false
-
-    const getClosestSectionIndex = () => {
-      if (sections.length === 0) return 0
-      const scrollY = typeof lenis.scroll === 'number' ? lenis.scroll : window.scrollY
-      let closestIndex = 0
-      let closestDistance = Number.POSITIVE_INFINITY
-
-      sections.forEach((section, index) => {
-        const top = section.offsetTop
-        const distance = Math.abs(top - scrollY)
-        if (distance < closestDistance) {
-          closestDistance = distance
-          closestIndex = index
-        }
-      })
-
-      return closestIndex
-    }
-
-    const isSnapDisabledForTarget = target => {
-      if (!target?.closest) return false
-      return Boolean(target.closest('[data-snap="false"]'))
-    }
-
-    const handleWheel = event => {
-      if (sections.length === 0) return
-      if (isSnapDisabledForTarget(event.target)) return
-      const lockTarget = event.target?.closest?.('[data-scroll-lock="true"]')
-      if (lockTarget) {
-        event.preventDefault()
-        return
-      }
-      if (isSnapping) {
-        event.preventDefault()
-        return
-      }
-
-      const direction = Math.sign(event.deltaY)
-      if (direction === 0) return
-
-      const currentIndex = getClosestSectionIndex()
-      const nextIndex = Math.min(
-        sections.length - 1,
-        Math.max(0, currentIndex + direction)
-      )
-
-      if (nextIndex === currentIndex) return
-
-      event.preventDefault()
-      isSnapping = true
-
-      lenis.scrollTo(sections[nextIndex], {
-        duration: 1.1,
-        easing: t => 1 - Math.pow(1 - t, 3)
-      })
-
-      window.setTimeout(() => {
-        isSnapping = false
-      }, 1200)
-    }
-
-    window.addEventListener('wheel', handleWheel, { passive: false })
-
     return () => {
-      document.documentElement.style.overflowX = prevHtmlOverflowX
-      document.body.style.overflowX = prevBodyOverflowX
-      window.removeEventListener('wheel', handleWheel)
       lenis.destroy()
     }
   }, [])
 
   return (
-    <>
-      <PillNav
-        lenis={lenisRef}
-        items={[
-          { label: 'Projects', href: '#projects' },
-          { label: 'Experience', href: '#experience' },
-          { label: 'TechStack', href: '#techstack' },
-        ]}
-      />
+    <div className="min-h-screen bg-black text-white p-4 md:p-8 lg:p-12 relative overflow-x-hidden">
+      {/* Global Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <PixelSnow
+          color="#ffffff"
+          flakeSize={0.01}
+          pixelResolution={300}
+          speed={1.0}
+          density={0.2}
+          brightness={1}
+        />
+      </div>
 
-      <section id="intro" data-page className="min-h-screen">
-        <Intro />
-      </section>
+      {/* Content Container */}
+      <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 grid-auto-rows-[minmax(180px,auto)]">
 
-      <section id="projects" data-page className="min-h-screen">
-        <Projects />
-      </section>
+          {/* Intro: Spans 2 cols, 2 rows (Large Hero) */}
+          <IntroCard />
 
-      <section id="experience" data-page data-snap="false" className="min-h-screen">
-        <Experience/>
-      </section>
+          {/* Projects: Spans 1 col, 2 rows (Tall sidebar) */}
+          <ProjectsCard />
 
-      <section id="techstack" data-page data-snap="false" className="min-h-screen">
-        <TechStake/>
-      </section>
-    </>
+          {/* Experience: Spans 2 cols, 1 row (Wide bar) */}
+          <ExperienceCard />
+
+          {/* Tech Stack: Spans 1 col, 1 row (Compact) */}
+          <TechStackCard />
+
+        </div>
+        <Footer />
+      </div>
+    </div>
   )
 }
