@@ -36,11 +36,11 @@ export default function App() {
       <div className="fixed inset-0 z-0 pointer-events-none">
         <PixelSnow
           color="#ffffff"
-          flakeSize={0.01}
-          pixelResolution={300}
-          speed={1.0}
-          density={0.2}
-          brightness={1}
+          flakeSize={0.008}
+          pixelResolution={400}
+          speed={0.8}
+          density={0.08}
+          brightness={2.5}
         />
       </div>
 
